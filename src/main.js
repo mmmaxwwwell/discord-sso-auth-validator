@@ -32,7 +32,7 @@ app.get("/auth", function (req, res, next) {
     return
   }
 
-  if(val.expires > Date.now()){
+  if(val.expires < Date.now()){
     debug('jwt-val-expired', {val})
     res.sendStatus(401);
     return
@@ -45,7 +45,7 @@ app.get("/auth", function (req, res, next) {
   }
 
   debug('jwt-val-ok', {val})
-  res.sendStatus(401);
+  res.sendStatus(200);
   return
 });
 
