@@ -1,5 +1,4 @@
 var jwt = require("jsonwebtoken");
-process.env.DEBUG = "express:*";
 const express = require("express");
 const expressWs = require("express-ws");
 const cookieParser = require("cookie-parser");
