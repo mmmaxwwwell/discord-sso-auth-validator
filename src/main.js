@@ -9,7 +9,7 @@ const debug = (event, ...rest) => {
     console.log({event, rest})
 }
 
-app.use(cookieParser());
+app.use(cookieParser())
 
 app.get("/auth", function (req, res, next) {
 
@@ -54,4 +54,4 @@ process.on('unhandledRejection', error => {
 });
 
 const port = parseInt(process.env.PORT)
-app.listen(port, () => console.log(`Example app listening on port ${port}!`));
+app.listen(port, () => console.log(`discord-sso-auth-validator listening on port ${port}${process.env.DEBUG ? " with debug output" : ""}!`));
