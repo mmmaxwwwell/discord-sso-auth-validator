@@ -64,5 +64,9 @@ app.get("/auth", function (req, res, next) {
   }
 });
 
+process.on('unhandledRejection', error => {
+  console.log({event:'unhandled-rejection', error});
+});
+
 const port = parseInt(process.env.PORT)
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
