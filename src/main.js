@@ -22,7 +22,7 @@ app.get("/auth", function (req, res, next) {
     res.sendStatus(401)
   } else {
     try {
-      const val = jwt.verify(req.cookies[HEADER_NAME], process.env.KEY);
+      const val = jwt.verify(req.cookies[HEADER_NAME], process.env.KEY, {algorithm: 'RS256'});
 
       if(!val){
         res.sendStatus(401);
