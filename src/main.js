@@ -21,7 +21,7 @@ app.get("/auth", function (req, res, next) {
 
   let val
   try {
-    val = jwt.verify(req.cookies[HEADER_NAME], process.env.KEY, {algorithm: 'RS256'});
+    val = jwt.verify(req.cookies[HEADER_NAME], process.env.KEY, {algorithm: 'HS384'});
   }catch(ex){
     console.log({event:'jwt-val-exception', ex})
   }
