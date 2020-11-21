@@ -24,27 +24,30 @@ app.get("/auth", function (req, res, next) {
     val = jwt.verify(req.cookies[HEADER_NAME], process.env.KEY, {algorithm: 'HS384'});
   }catch(ex){
     console.log({event:'jwt-val-exception', ex})
+    debug('jwt-val-exception', req.cookies[HEADER_NAME])
+    res.sendStatus(401);
+    return
   }
     
   if(!val){
-    debug('jwt-val-fail', {val})
+    debug('jwt-val-fail', val)
     res.sendStatus(401);
     return
   }
 
   if(val.expires < Date.now()){
-    debug('jwt-val-expired', {val})
+    debug('jwt-val-expired', val)
     res.sendStatus(401);
     return
   }
 
   if(!val.admin){
-    debug('jwt-val-forbidden', {val})
+    debug('jwt-val-forbidden', val)
     res.sendStatus(401);
     return
   }
 
-  debug('jwt-val-ok', {val})
+  debug('jwt-val-ok', val)
   res.sendStatus(200);
   return
 });
