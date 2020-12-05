@@ -2,7 +2,7 @@ var jwt = require("jsonwebtoken");
 const express = require("express");
 const cookieParser = require("cookie-parser");
 const app = express()
-const HEADER_NAME = "jwt_token";
+const HEADER_NAME = process.env.HEADER_NAME || "jwt_token";
 
 const debug = (event, ...rest) => {
   if(process.env.DEBUG)
