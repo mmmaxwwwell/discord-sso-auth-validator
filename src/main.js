@@ -2,7 +2,7 @@ var jwt = require("jsonwebtoken");
 const express = require("express");
 const cookieParser = require("cookie-parser");
 const app = express()
-const HEADER_NAME = "jwt_token";
+const HEADER_NAME = process.env.HEADER_NAME || "jwt_token";
 
 const debug = (event, ...rest) => {
   if(process.env.DEBUG)
@@ -28,7 +28,7 @@ app.get("/auth", function (req, res, next) {
     res.sendStatus(401);
     return
   }
-    
+
   if(!val){
     debug('jwt-val-fail', val)
     res.sendStatus(401);
@@ -41,15 +41,21 @@ app.get("/auth", function (req, res, next) {
     return
   }
 
-  if(!val.admin){
-    debug('jwt-val-forbidden', val)
+  try{
+    if(val.roles.includes(req.headers.host)){
+      debug('jwt-auth-host-success', { host: req.headers.host, roles: val.roles })
+      res.sendStatus(200);
+      return
+    }else{
+      debug('jwt-auth-host-fail', { host: req.headers.host, roles: val.roles, id: val.id, username: val.username, discriminator: val.discriminator })
+      res.sendStatus(401);
+      return
+    }
+  }catch(error){
+    debug('jwt-auth-host-error', { headers: req.headers, val })
     res.sendStatus(401);
     return
   }
-
-  debug('jwt-val-ok', val)
-  res.sendStatus(200);
-  return
 });
 
 process.on('unhandledRejection', error => {
