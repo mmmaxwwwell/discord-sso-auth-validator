@@ -41,17 +41,21 @@ app.get("/auth", function (req, res, next) {
     return
   }
 
-  console.log(req.headers)
-
-  if(!val.admin){
-    debug('jwt-val-forbidden', val)
+  try{
+    if(val.roles.includes(req.headers.host)){
+      debug('jwt-auth-host-success', { host: req.headers.host, roles: val.roles })
+      res.sendStatus(200);
+      return
+    }else{
+      debug('jwt-auth-host-fail', { host: req.headers.host, roles: val.roles, id: val.id, username: val.username, discriminator: val.discriminator })
+      res.sendStatus(401);
+      return
+    }
+  }catch(error){
+    debug('jwt-auth-host-error', { headers: req.headers, val })
     res.sendStatus(401);
     return
   }
-
-  debug('jwt-val-ok', val)
-  res.sendStatus(200);
-  return
 });
 
 process.on('unhandledRejection', error => {
