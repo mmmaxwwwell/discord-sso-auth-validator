@@ -28,7 +28,7 @@ app.get("/auth", function (req, res, next) {
     res.sendStatus(401);
     return
   }
-    
+
   if(!val){
     debug('jwt-val-fail', val)
     res.sendStatus(401);
@@ -40,6 +40,8 @@ app.get("/auth", function (req, res, next) {
     res.sendStatus(401);
     return
   }
+
+  console.log(req.headers)
 
   if(!val.admin){
     debug('jwt-val-forbidden', val)
