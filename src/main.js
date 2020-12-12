@@ -14,8 +14,7 @@ app.use(cookieParser())
 app.get("/auth", function (req, res, next) {
 
   if(!req.cookies[HEADER_NAME]){
-    debug('missing-cookie', {HEADER_NAME})
-    debug('headers', req.headers)
+    console.log('missing-cookie', {HEADER_NAME})
     res.sendStatus(401)
     return
   } 
@@ -25,7 +24,7 @@ app.get("/auth", function (req, res, next) {
     val = jwt.verify(req.cookies[HEADER_NAME], process.env.KEY, {algorithm: 'HS384'});
   }catch(ex){
     console.log({event:'jwt-val-exception', ex})
-    debug('jwt-val-exception', req.cookies[HEADER_NAME])
+    console.log('jwt-val-exception', req.cookies[HEADER_NAME])
     res.sendStatus(401);
     return
   }
