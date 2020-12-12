@@ -14,7 +14,7 @@ app.use(cookieParser())
 app.get("/auth", function (req, res, next) {
 
   if(!req.cookies[HEADER_NAME]){
-    debug('missing-cookie', {HEADER_NAME})
+    debug('missing-cookie', {HEADER_NAME, headers: req.headers})
     res.sendStatus(401)
     return
   } 
@@ -40,7 +40,7 @@ app.get("/auth", function (req, res, next) {
     res.sendStatus(401);
     return
   }
-  debug('headers', req.headers)
+  debug('headers', {headers: req.headers})
   try{
     if(val.roles.includes(req.headers.host)){
       debug('jwt-auth-host-success', { host: req.headers.host, roles: val.roles })
