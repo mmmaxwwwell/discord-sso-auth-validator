@@ -14,7 +14,8 @@ app.use(cookieParser())
 app.get("/auth", function (req, res, next) {
 
   if(!req.cookies[HEADER_NAME]){
-    debug('missing-cookie', {HEADER_NAME, headers: req.headers})
+    debug('missing-cookie', {HEADER_NAME})
+    debug('headers', req.headers)
     res.sendStatus(401)
     return
   } 
