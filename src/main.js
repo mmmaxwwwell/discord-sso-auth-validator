@@ -62,5 +62,5 @@ process.on('unhandledRejection', error => {
   console.log({event:'unhandled-rejection', error});
 });
 
-const port = parseInt(process.env.PORT)
+const port = parseInt(process.env.VALIDATOR_PORT)
 app.listen(port, () => console.log(`discord-sso-auth-validator listening on port ${port}${process.env.DEBUG ? " with debug output" : ""}!`));
